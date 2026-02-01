@@ -14,6 +14,12 @@ defmodule PlateSlateWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/", PlateSlateWeb do
+    pipe_through :browser
+
+    get "/", PageController, :home
+  end
+
   scope "/" do
     pipe_through :api
 
