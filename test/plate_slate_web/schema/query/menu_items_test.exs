@@ -40,7 +40,7 @@ defmodule PlateSlateWeb.Schema.Query.MenuItemsTest do
 
   @query """
   query ($term: String) {
-    menuItems(matching: $term) {
+    menuItems(filter: {name: $term}) {
       name
     }
   }
@@ -60,7 +60,7 @@ defmodule PlateSlateWeb.Schema.Query.MenuItemsTest do
 
   @query """
   {
-    menuItems(matching: 123) {
+    menuItems(filter: {name: 123}) {
       name
     }
   }
@@ -75,7 +75,7 @@ defmodule PlateSlateWeb.Schema.Query.MenuItemsTest do
            } = json_response(response, 200)
 
     assert message ==
-             "Argument \"matching\" has invalid value 123."
+             "Argument \"filter\" has invalid value {name: 123}.\nIn field \"name\": Expected type \"String\", found 123."
   end
 
   @query """
@@ -90,5 +90,20 @@ defmodule PlateSlateWeb.Schema.Query.MenuItemsTest do
     assert %{
       "data" => %{"menuItems" => [%{"name" => "Water"} | _]}
     } = json_response(response, 200)
+  end
+
+  @query """
+  query ($filter: MenuItemFilter!) {
+    menuItems(filter: $filter) {
+      name
+    }
+  }
+  """
+  @variables %{filter: %{"category" => "Sandwiches", "tag" => "Vegetarian"}}
+  test "menuItems field returns menuItems, filtering with a variable" do
+    response = get(build_conn(), "/api", query: @query, variables: @variables)
+    assert %{
+      "data" => %{"menuItems" => [%{"name" => "Vada Pav"}]}
+    } == json_response(response, 200)
   end
 end
