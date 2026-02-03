@@ -7,6 +7,18 @@ defmodule PlateSlateWeb.Schema do
     value(:desc)
   end
 
+  scalar :date do
+    parse fn input ->
+      case Date.from_iso8601(input.value) do
+        {:ok, date} -> {:ok, date}
+        _ -> :error
+      end
+    end
+    serialize fn date ->
+      Date.to_iso8601(date)
+    end
+  end
+
   @desc "Filtering options for menu item list"
   input_object :menu_item_filter do
     @desc "Matching a name"
