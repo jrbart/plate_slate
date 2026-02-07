@@ -2,6 +2,8 @@ defmodule PlateSlateWeb.Schema do
   use Absinthe.Schema
   alias PlateSlateWeb.Resolvers
 
+    import_types __MODULE__.MenuTypes
+
   enum :sort_order do
     value(:asc)
     value(:desc)
@@ -19,20 +21,6 @@ defmodule PlateSlateWeb.Schema do
     end
   end
 
-  @desc "Filtering options for menu item list"
-  input_object :menu_item_filter do
-    @desc "Matching a name"
-    field :name, :string
-    @desc "Matching a cotegory name"
-    field :category, :string
-    @desc "Matching a tag"
-    field :tag, :string
-    @desc "Priced above a value"
-    field :priced_above, :float
-    @desc "Priced below a value"
-    field :priced_below, :float
-  end
-
   query do
     @desc "The list of available items on the menu"
     field :menu_items, list_of(:menu_item) do
@@ -42,9 +30,4 @@ defmodule PlateSlateWeb.Schema do
     end
   end
 
-  object :menu_item do
-    field :id, :id
-    field :name, :string
-    field :description, :string
-  end
 end
