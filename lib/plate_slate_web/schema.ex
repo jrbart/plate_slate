@@ -1,7 +1,6 @@
 defmodule PlateSlateWeb.Schema do
   use Absinthe.Schema
   alias PlateSlateWeb.Resolvers
-  alias PlateSlate.Menu
 
   import_types(__MODULE__.MenuTypes)
 
@@ -32,22 +31,12 @@ defmodule PlateSlateWeb.Schema do
   end
 
   object :search_query do
-    field :search, list_of(search_result) do
+    field :search, list_of(:search_result) do
       arg(:matching, non_null(:string))
       resolve(&Resolvers.Menu.search/3)
     end
   end
     
-  union :search_result do
-    types([:menu_item, :category])
-
-    resolve_type(fn
-      %Menu.Item{}, _ -> :menu_item
-      %Menu.Category{}, _ -> :category
-      _, _ -> nil
-    end)
-  end
-
   query do
     import_fields :menu_queries
     import_fields :search_query
