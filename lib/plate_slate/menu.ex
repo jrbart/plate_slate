@@ -129,17 +129,21 @@ defmodule PlateSlate.Menu do
   end
 
   defp filter_with(query, filter) do
-    Enum.reduce(filter, query, fn 
+    Enum.reduce(filter, query, fn
       {:name, name}, query ->
         from q in query, where: ilike(q.name, ^"%#{name}%")
+
       {:priced_above, price}, query ->
         from q in query, where: q.price >= ^price
+
       {:priced_below, price}, query ->
         from q in query, where: q.price <= ^price
+
       {:category, category_name}, query ->
         from q in query,
           join: c in assoc(q, :category),
           where: ilike(c.name, ^"%#{category_name}%")
+
       {:tag, tag_name}, query ->
         from q in query,
           join: t in assoc(q, :tags),

@@ -87,9 +87,10 @@ defmodule PlateSlateWeb.Schema.Query.MenuItemsTest do
   """
   test "menuItems field returns items in descending using literals" do
     response = get(build_conn(), "/api", query: @query)
+
     assert %{
-      "data" => %{"menuItems" => [%{"name" => "Water"} | _]}
-    } = json_response(response, 200)
+             "data" => %{"menuItems" => [%{"name" => "Water"} | _]}
+           } = json_response(response, 200)
   end
 
   @query """
@@ -102,8 +103,9 @@ defmodule PlateSlateWeb.Schema.Query.MenuItemsTest do
   @variables %{filter: %{"category" => "Sandwiches", "tag" => "Vegetarian"}}
   test "menuItems field returns menuItems, filtering with a variable" do
     response = get(build_conn(), "/api", query: @query, variables: @variables)
+
     assert %{
-      "data" => %{"menuItems" => [%{"name" => "Vada Pav"}]}
-    } == json_response(response, 200)
+             "data" => %{"menuItems" => [%{"name" => "Vada Pav"}]}
+           } == json_response(response, 200)
   end
 end
