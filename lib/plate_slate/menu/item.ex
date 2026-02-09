@@ -1,7 +1,7 @@
 defmodule PlateSlate.Menu.Item do
-  alias PlateSlate.Menu.Item
   use Ecto.Schema
   import Ecto.Changeset
+  alias __MODULE__
 
   schema "items" do
     field :name, :string
