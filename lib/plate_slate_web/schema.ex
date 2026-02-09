@@ -36,9 +36,9 @@ defmodule PlateSlateWeb.Schema do
       resolve(&Resolvers.Menu.search/3)
     end
   end
-    
+
   query do
-    import_fields :menu_queries
-    import_fields :search_query
+    import_fields(:menu_queries)
+    import_fields(:search_query)
   end
 end
