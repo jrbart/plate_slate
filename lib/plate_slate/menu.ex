@@ -129,17 +129,21 @@ defmodule PlateSlate.Menu do
   end
 
   defp filter_with(query, filter) do
-    Enum.reduce(filter, query, fn 
+    Enum.reduce(filter, query, fn
       {:name, name}, query ->
         from q in query, where: ilike(q.name, ^"%#{name}%")
+
       {:priced_above, price}, query ->
         from q in query, where: q.price >= ^price
+
       {:priced_below, price}, query ->
         from q in query, where: q.price <= ^price
+
       {:category, category_name}, query ->
         from q in query,
           join: c in assoc(q, :category),
           where: ilike(c.name, ^"%#{category_name}%")
+
       {:tag, tag_name}, query ->
         from q in query,
           join: t in assoc(q, :tags),
@@ -226,5 +230,18 @@ defmodule PlateSlate.Menu do
   """
   def change_item(%Item{} = item, attrs \\ %{}) do
     Item.changeset(item, attrs)
+  end
+
+  @search [Item, Category]
+  def search(term) do
+    pattern = "%#{term}%"
+    Enum.flat_map(@search, &search_ecto(&1, pattern))
+  end
+
+  defp search_ecto(ecto_schema, pattern) do
+    Repo.all(
+      from q in ecto_schema,
+        where: ilike(q.name, ^pattern) or ilike(q.description, ^pattern)
+    )
   end
 end
