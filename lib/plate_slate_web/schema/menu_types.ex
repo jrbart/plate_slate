@@ -22,6 +22,7 @@ defmodule PlateSlateWeb.Schema.MenuTypes do
     field :id, :id
     field :name, :string
     field :description, :string
+    field :price, :decimal
   end
 
   object :category do
