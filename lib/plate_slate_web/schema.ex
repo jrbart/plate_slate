@@ -43,13 +43,15 @@ defmodule PlateSlateWeb.Schema do
   end
 
   scalar :decimal do
-    parse fn 
-      %{value: value} -> 
+    parse(fn
+      %{value: value}, _ ->
         Decimal.parse(value)
-      _ -> 
+
+      _, _ ->
         :error
-     end
-    serialize &to_string/1
+    end)
+
+    serialize(&to_string/1)
   end
 
   input_object :menu_item_input do
@@ -58,15 +60,15 @@ defmodule PlateSlateWeb.Schema do
     field :price, non_null(:decimal)
     field :category, non_null(:id)
   end
-  
+
   object :create_menu_item_query do
     field :create_menu_item, :menu_item do
-      arg :input, non_null(:menu_item_input)
-      resolve &Resolvers.Menu.create_item/3
+      arg(:input, non_null(:menu_item_input))
+      resolve(&Resolvers.Menu.create_item/3)
     end
   end
 
   mutation do
-   import_fields :create_menu_item_query 
+    import_fields(:create_menu_item_query)
   end
 end
