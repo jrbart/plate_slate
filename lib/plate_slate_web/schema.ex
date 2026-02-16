@@ -38,7 +38,7 @@ defmodule PlateSlateWeb.Schema do
     field :name, non_null(:string)
     field :description, :string
     field :price, non_null(:decimal)
-    field :category, non_null(:id)
+    field :category_id, non_null(:id)
   end
 
   object :create_menu_item_query do
