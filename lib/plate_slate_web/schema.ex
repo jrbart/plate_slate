@@ -22,6 +22,36 @@ defmodule PlateSlateWeb.Schema do
     end)
   end
 
+  scalar :decimal do
+    parse(fn
+      %{value: value} ->
+        {:ok, Decimal.new(value)}
+
+      _ ->
+        :error
+    end)
+
+    serialize(&to_string/1)
+  end
+
+  input_object :menu_item_input do
+    field :name, non_null(:string)
+    field :description, :string
+    field :price, non_null(:decimal)
+    field :category_id, non_null(:id)
+  end
+
+  object :create_menu_item_query do
+    field :create_menu_item, :menu_item do
+      arg(:input, non_null(:menu_item_input))
+      resolve(&Resolvers.Menu.create_item/3)
+    end
+  end
+
+  mutation do
+    import_fields(:create_menu_item_query)
+  end
+
   object :menu_queries do
     field :menu_items, list_of(:menu_item) do
       arg(:filter, :menu_item_filter)
