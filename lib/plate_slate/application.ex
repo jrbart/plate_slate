@@ -17,7 +17,8 @@ defmodule PlateSlate.Application do
       # Start a worker by calling: PlateSlate.Worker.start_link(arg)
       # {PlateSlate.Worker, arg},
       # Start to serve requests, typically the last entry
-      PlateSlateWeb.Endpoint
+      PlateSlateWeb.Endpoint,
+      {Absinthe.Subscription, pubsub: PlateSlateWeb.Endpoint}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
