@@ -51,6 +51,7 @@ defmodule PlateSlate.Ordering do
   """
   def create_order(attrs \\ %{}) do
     attrs = Map.update(attrs, :items, [], &build_items/1)
+
     %Order{}
     |> Order.changeset(attrs)
     |> Repo.insert()
