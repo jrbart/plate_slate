@@ -13,7 +13,7 @@ defmodule PlateSlateWeb.SubscriptionCase do
       use PlateSlateWeb.ChannelCase
 
       use Absinthe.Phoenix.SubscriptionTest,
-        shcmea: PlateSlateWeb.Schema
+        schema: PlateSlateWeb.Schema
 
       setup do
         PlateSlate.Seeds.run()
