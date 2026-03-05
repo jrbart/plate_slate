@@ -1,6 +1,14 @@
 defmodule PlateSlateWeb.Schema do
   use Absinthe.Schema
   alias PlateSlateWeb.Resolvers
+  alias PlateSlateWeb.Schema.Middleware
+
+  def middleware(middleware, _field, %{identifier: :mutation}) do
+    middleware ++ [Middleware.ChangesetErrors]
+  end
+  def middleware(middleware, _field, _object) do
+    middleware
+  end
 
   import_types(__MODULE__.MenuTypes)
   import_types(__MODULE__.OrderingTypes)
