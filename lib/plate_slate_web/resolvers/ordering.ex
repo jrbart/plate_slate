@@ -3,8 +3,8 @@ defmodule PlateSlateWeb.Resolvers.Ordering do
 
   def place_order(_, %{input: place_order_input}, _) do
     with {:ok, order} <- Ordering.create_order(place_order_input) do
-        Absinthe.Subscription.publish(PlateSlateWeb.Endpoint, order, new_order: "*")
-        {:ok, %{order: order}}
+      Absinthe.Subscription.publish(PlateSlateWeb.Endpoint, order, new_order: "*")
+      {:ok, %{order: order}}
     end
   end
 

@@ -15,9 +15,8 @@ defmodule PlateSlateWeb.Resolvers.Menu do
   end
 
   def create_item(_, %{input: params}, _) do
-      with {:ok, item} <- Menu.create_item(params) do
-        {:ok, %{menu_item: item}}
+    with {:ok, item} <- Menu.create_item(params) do
+      {:ok, %{menu_item: item}}
     end
   end
-
 end

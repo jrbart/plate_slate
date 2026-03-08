@@ -6,6 +6,7 @@ defmodule PlateSlateWeb.Schema do
   def middleware(middleware, _field, %{identifier: :mutation}) do
     middleware ++ [Middleware.ChangesetErrors]
   end
+
   def middleware(middleware, _field, _object) do
     middleware
   end
