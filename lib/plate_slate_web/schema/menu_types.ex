@@ -23,6 +23,12 @@ defmodule PlateSlateWeb.Schema.MenuTypes do
     field :name, :string
     field :description, :string
     field :price, :decimal
+    field :allergy_info, list_of(:allergy_info)
+  end
+
+  object :allergy_info do
+    field :allergen, :string
+    field :severity, :string
   end
 
   object :menu_item_result do

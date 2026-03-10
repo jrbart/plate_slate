@@ -1,13 +1,9 @@
-
 defmodule PlateSlateWeb.Schema.Middleware.ChangesetErrors do
   @behaviour Absinthe.Middleware
 
   def call(res, _) do
     with %{errors: [%Ecto.Changeset{} = changeset]} <- res do
-      %{res |
-        value: %{errors: transform_errors(changeset)},
-        errors: []
-      }
+      %{res | value: %{errors: transform_errors(changeset)}, errors: []}
     end
   end
 
