@@ -3,6 +3,12 @@ defmodule PlateSlateWeb.Schema do
   alias PlateSlateWeb.Resolvers
   alias PlateSlateWeb.Schema.Middleware
 
+  def middleware(middleware, field, %{identifier: :allergy_info} = object) do
+    field_to_string = {Absinthe.Middleware.MapGet, to_string(field.identifier)}
+
+    Absinthe.Schema.replace_default(middleware, field_to_string, field, object)
+  end
+
   def middleware(middleware, _field, %{identifier: :mutation}) do
     middleware ++ [Middleware.ChangesetErrors]
   end
